@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float
+from sqlalchemy import DateTime, Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -7,4 +7,20 @@ Session = sessionmaker()
 
 class Tick(Base):
     __tablename__ = "ticks"
-    #TODO: Implement the Tick model with necessary fields
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    symbol = Column(String, index=True)
+    ts = Column(String)
+    open = Column(Float)
+    high = Column(Float)
+    low = Column(Float)
+    close = Column(Float)
+    volume = Column(Float)
+    created = Column(DateTime)
+
+
+class Signal(Base):
+    __tablename__ = "signals"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    symbol = Column(String)
+    signal = Column(String)
+    created = Column(DateTime)
