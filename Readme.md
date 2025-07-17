@@ -36,11 +36,18 @@ See .github/workflows/ci.yml
 - Secrets: Use .env for local, AWS Secrets Manager/SSM for prod.
 - Observability: Prometheus metrics, Flower UI for Celery.
 
+## Deployment
+```bash 
+cd infra
+terraform init
+terraform apply
+```
+
 ## Time log
-| Date       | Task                            | Hours |
-| ---------- | ------------------------------- | ----- |
-| 2025-07-15 | Project scaffold, FastAPI setup | 1     |
-| 2025-07-16 | Celery, DB, Redis, endpoints    | 3     |
-| 2025-07-16 | Docker, Compose, endpoints      | 3     |
-| 2025-07-17 | docs, testing, CI/CD            | 3     |
-| **Total**  |                                 | **9** |
+| Date       | Task                                | Hours |
+| ---------- | ----------------------------------- | ----- |
+| 2025-07-14 | Project scaffold, FastAPI setup     | 1     |
+| 2025-07-15 | Celery, DB, Redis, endpoints        | 3     |
+| 2025-07-16 | Docker, Compose, testing, endpoints | 3     |
+| 2025-07-17 | docs, testing, CI/CD, AWS Terraform | 3     |
+| **Total**  |                                     | **10** |
