@@ -4,7 +4,6 @@ annotated-types==0.7.0
 anyio==4.9.0
 async-timeout==5.0.1
 asyncpg==0.30.0
-backports.asyncio.runner==1.2.0
 billiard==4.2.1
 celery==5.5.3
 certifi==2025.7.14
@@ -56,3 +55,4 @@ tzdata==2025.2
 uvicorn==0.35.0
 vine==5.1.0
 wcwidth==0.2.13
+lint
