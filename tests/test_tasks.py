@@ -9,7 +9,7 @@ def test_classify_sma_all_cases():
     assert classify_sma(10, None) == "HOLD"
 
 
-def test_compute_sma_not_enough_data2(monkeypatch):
+def test_compute_sma_not_enough_data(monkeypatch):
     class DummyDB:
         def execute(self, stmt): return type("Dummy", (), {"scalars": lambda self: type("Dummy", (), {"all": lambda self: [type("Dummy", (), {"close": 1.0})() for _ in range(10)]})()})()
     sma_20, sma_50 = compute_sma("AAPL", DummyDB())
