@@ -30,7 +30,7 @@ async def startup_event():
 def ingest_ticks(ticks: List[Tick]):
     """Accept batch of ticks and enqueue processing task."""
     try:
-        process_batch_ticks.delay([tick.dict() for tick in ticks])
+        process_batch_ticks.delay([tick.model_dump() for tick in ticks])
         return {"status": "received", "count": len(ticks)}
     except Exception as e:
         raise HTTPException(500,str(e))
