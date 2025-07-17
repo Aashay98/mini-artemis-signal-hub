@@ -3,7 +3,7 @@ from http.client import HTTPException
 from typing import List
 from fastapi import FastAPI, WebSocket
 from pydantic import BaseModel
-import redis
+from prometheus_fastapi_instrumentator import Instrumentator
 from app.redis_listener import redis_signal_listener
 from app.tasks import process_batch_ticks
 from app.websockets import WebSocketManager
@@ -52,7 +52,5 @@ async def health_check():
     """Healthcheck endpoint."""
     return {"status": "healthy"}
 
-@app.get("/metrics")
-async def metrics():
-    """Prometheus metrics endpoint."""
-    return {"metrics": "To be configured with Prometheus integration"}
+instrumentator = Instrumentator()
+instrumentator.instrument(app).expose(app, endpoint="/metrics")

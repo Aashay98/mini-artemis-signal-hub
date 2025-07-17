@@ -1,15 +1,16 @@
+import os
+from dotenv import load_dotenv
 from app.celery_worker import celery
 from sqlalchemy import create_engine, desc, select
 import redis
-import pandas as pd
 from datetime import datetime
 from sqlalchemy.orm import Session, sessionmaker
 from app.models import Signal, Tick
-
+load_dotenv()
 
 # Redis and Postgres configurations
-redis_client = redis.Redis(host='redis', port=6379, db=0)
-engine = create_engine("postgresql://postgres:postgres@localhost:5432/mini_artemis")
+redis_client = redis.Redis.from_url(os.getenv("REDIS_URL"))
+engine = create_engine(os.getenv("POSTGRESQL_URL"))
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 @celery.task
