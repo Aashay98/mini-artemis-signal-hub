@@ -10,7 +10,7 @@ load_dotenv()
 
 # Redis and Postgres configurations
 redis_client = redis.Redis.from_url(os.getenv("REDIS_URL"))
-engine = create_engine(os.getenv("POSTGRESQL_URL"))
+engine = create_engine(os.getenv("POSTGRES_URL"))
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 @celery.task
@@ -20,6 +20,7 @@ def process_batch_ticks(ticks):
     tick_models = [Tick(**tick.dict()) for tick in ticks]
     db.add_all(tick_models)
     db.commit()
+    db.close()
 
     # group by symbol and enqueue SMA calc
     symbols = set(tick['symbol'] for tick in ticks)
@@ -48,6 +49,8 @@ def calculate_sma(symbol: str):
     # Save to Postgres
     new_signal = Signal(symbol=symbol, timestamp=datetime.utcnow(), signal=signal)
     db.add(new_signal)
+    db.commit()
+    db.close()
     
 def compute_sma(symbol: str, db: Session):
     """Compute 20/50 SMA from recent ticks"""

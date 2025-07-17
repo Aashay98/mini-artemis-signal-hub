@@ -1,7 +1,6 @@
 import asyncio
-from http.client import HTTPException
 from typing import List
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, WebSocket, HTTPException
 from pydantic import BaseModel
 from prometheus_fastapi_instrumentator import Instrumentator
 from app.redis_listener import redis_signal_listener
@@ -31,7 +30,6 @@ async def startup_event():
 def ingest_ticks(ticks: List[Tick]):
     """Accept batch of ticks and enqueue processing task."""
     try:
-        print(ticks)
         process_batch_ticks.delay([tick.dict() for tick in ticks])
         return {"status": "received", "count": len(ticks)}
     except Exception as e:
